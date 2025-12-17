@@ -1,5 +1,5 @@
 ﻿namespace TextBasedGame.DamageMechanics.BodyParts;
 
-public interface IArms: IBodyParts
+public interface IArms: IBodyPart
 {
 }

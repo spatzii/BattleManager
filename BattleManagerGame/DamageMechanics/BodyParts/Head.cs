@@ -1,6 +1,6 @@
 ﻿namespace TextBasedGame.DamageMechanics.BodyParts;
 
-public class Head : IBodyParts
+public class Head : IBodyPart
 {
     public string Name => "Head";
     public int PainModifier => 30;

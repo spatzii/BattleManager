@@ -1,6 +1,6 @@
 ﻿namespace TextBasedGame.DamageMechanics.BodyParts;
 
-public interface IBodyParts
+public interface IBodyPart
 {
     string Name { get; }
     int PainModifier { get; }

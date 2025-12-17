@@ -5,7 +5,7 @@ namespace TextBasedGame;
 
 public class Attack
 {
-    public void AttackBodyPart(IBodyParts bodyPart, int damage)
+    public void AttackBodyPart(IBodyPart bodyPart, int damage)
     {
         // Math.Max(0...) clamps the effectiveness to zero. Remove if we implement spillover
         bodyPart.Effectiveness = Math.Max(0, bodyPart.Effectiveness - damage);
@@ -14,10 +14,23 @@ public class Attack
     }
 }
 
-public class RoundGenerator
+public class CombatResolver
 {
-    public void Round(ICharacter player1, ICharacter player2)
+    public int ResolveAttack(ICharacter attacker, ICharacter defender)
     {
+        var damage = attacker.Weapon.Damage;
+        var targetBodyPart = defender.Body.Head;
+        ApplyDamage(damage, targetBodyPart);
+
+        return targetBodyPart.Effectiveness;
+
     }
+
+    private void ApplyDamage(int dmg, IBodyPart target)
+    {
+        target.Effectiveness = Math.Max(0, target.Effectiveness - dmg);
+        
+    }
+    
 }
 

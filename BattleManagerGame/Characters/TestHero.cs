@@ -1,10 +1,12 @@
 using TextBasedGame.DamageMechanics.Body;
+using TextBasedGame.Equipment.Weapons;
 
 namespace TextBasedGame.Characters;
 
-public class TestHero : ICharacter
+public class TestHero(string name, IWeapons? weapon = null) : ICharacter
 {
-    public string Name => "Our hero";
+    public string Name { get; } = name;
     private readonly IBody _body = new Body();
     public IBody Body => _body;
+    public IWeapons? Weapon { get; private set; } = weapon;
 }

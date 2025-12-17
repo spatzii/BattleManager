@@ -4,11 +4,11 @@ namespace TextBasedGame.DamageMechanics.Body;
 
 public class Body : IBody
 {
-    public IBodyParts Head { get; } = new Head();
-    public IBodyParts Torso { get; } = new Torso();
-    public IBodyParts LeftHand { get; } = new LeftHand();
-    public IBodyParts RightHand { get; } = new RightHand();
-    public IBodyParts LeftLeg { get; } = new LeftLeg();
-    public IBodyParts RightLeg { get; } = new RightLeg();
+    public IBodyPart Head { get; } = new Head();
+    public IBodyPart Torso { get; } = new Torso();
+    public IBodyPart LeftHand { get; } = new LeftHand();
+    public IBodyPart RightHand { get; } = new RightHand();
+    public IBodyPart LeftLeg { get; } = new LeftLeg();
+    public IBodyPart RightLeg { get; } = new RightLeg();
     
 }
