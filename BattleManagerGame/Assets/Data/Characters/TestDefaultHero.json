@@ -1,0 +1,8 @@
+{
+  "characterType": "Hero",
+  "displayName": "Bowie",
+  "baseStats": {
+    "melee": 2,
+    "accuracy": 70
+  }
+}

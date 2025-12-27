@@ -1,0 +1,7 @@
+{
+  "weaponType": "Sword",
+  "displayName": "Sword",
+  "baseStats": {
+    "damage": 10
+  }
+}

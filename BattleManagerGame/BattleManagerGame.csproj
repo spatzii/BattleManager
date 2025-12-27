@@ -8,4 +8,19 @@
         <RootNamespace>TextBasedGame</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Update="Assets\Data\Characters\TestDefaultHero.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\Data\Characters\Ogre.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\Data\Weapons\BasicSword.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\Data\Weapons\Club.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

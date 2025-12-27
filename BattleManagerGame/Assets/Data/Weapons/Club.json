@@ -1,0 +1,7 @@
+{
+  "weaponType": "Club",
+  "displayName": "Club",
+  "baseStats": {
+    "damage": 8
+  }
+}

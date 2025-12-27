@@ -1,0 +1,8 @@
+{
+  "characterType": "Enemy",
+  "displayName": "Ogre",
+  "baseStats": {
+    "melee": 10,
+    "accuracy": 60
+  }
+}
