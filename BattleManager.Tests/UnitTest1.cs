@@ -15,8 +15,7 @@ public class UnitTest1
     public void ResolveAttack_TwiceAgainstSameDefender_PersistsDamageAcrossCalls()
     {
         // Arrange
-        var swordStats = WeaponLoader.LoadStatsFromFile(GamePaths.WEAPON_STATS + "BasicSword.json");
-        var sword = new Sword(weaponStats: swordStats);
+        var sword = Sword.Create();
         
         var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
         var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, sword);
@@ -33,8 +32,8 @@ public class UnitTest1
         var afterSecondAttack = resolver.Test_ResolveAttack_Head(hero, enemy);
 
         // Assert (persistence: the second call builds on the state changed by the first)
-        Assert.Equal(startEffectiveness - hero.Weapon!.Damage, afterFirstAttack);
-        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.Damage), afterSecondAttack);
+        Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
+        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.WeaponStats.Damage), afterSecondAttack);
 
         // Also assert the defender's state actually changed (not just the return value)
         Assert.Equal(afterSecondAttack, enemy.Body.GetPart(BodyPartType.Head).Effectiveness);
@@ -45,8 +44,7 @@ public class UnitTest1
     {
         // Arrange
         
-        var swordStats = WeaponLoader.LoadStatsFromFile(GamePaths.WEAPON_STATS + "BasicSword.json");
-        var sword = new Sword(weaponStats: swordStats);
+        var sword = Sword.Create();
         
         var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
         var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, sword);
@@ -65,8 +63,8 @@ public class UnitTest1
         var afterSecondAttack = resolver.ResolveAttack_SpecificPart(hero, enemy, rand_part);
 
         // Assert (persistence: the second call builds on the state changed by the first)
-        Assert.Equal(startEffectiveness - hero.Weapon!.Damage, afterFirstAttack);
-        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.Damage), afterSecondAttack);
+        Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
+        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.WeaponStats.Damage), afterSecondAttack);
 
         // Also assert the defender's state actually changed (not just the return value)
         Assert.Equal(afterSecondAttack, rand_part.Effectiveness);

@@ -12,17 +12,19 @@ internal static class Program
     public static void Main(string[] args)
     {
 
-        // var bowieStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
+        // var bowieStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");                   
         // var player = new GenericTestCharacter("Bowie", characterStats: bowieStats, weapon: new Sword());
         // var acc = player.CharacterStats.Accuracy;
         // Console.WriteLine(acc);
+        //
+        // var swordStats = WeaponLoader.LoadStatsFromFile(GamePaths.WEAPON_STATS + "BasicSword.json");
+        // var sword = new Sword(weaponStats: swordStats);
+        // Console.WriteLine(sword.Name);
+        // Console.WriteLine(sword.Damage);
+        //
 
-        var swordStats = WeaponLoader.LoadStatsFromFile(GamePaths.WEAPON_STATS + "BasicSword.json");
-        var sword = new Sword(weaponStats: swordStats);
-        Console.WriteLine(sword.Name);
+        var sword = Sword.Create();
         Console.WriteLine(sword.Damage);
-        
-        
 
     }
 }

@@ -6,6 +6,9 @@ namespace TextBasedGame.Equipment.EquipmentStats.WeaponStats;
 
 public class WeaponData
 {
+    [JsonPropertyName("displayName")]
+    public string Name { get; set; }
+    [JsonPropertyName("baseStats")]
     public Dictionary<WeaponStatType, float> weaponStats { get; set; }
 }
 
@@ -26,6 +29,6 @@ public class WeaponLoader
         var data = JsonSerializer.Deserialize<WeaponData>(jsonString, options);
 
         // 4. Create the actual Stats class using the dictionary we just unpacked
-        return new WeaponStats(data.weaponStats);
+        return new WeaponStats(data.Name, data.weaponStats);
     }
 }

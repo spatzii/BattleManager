@@ -2,7 +2,8 @@ namespace TextBasedGame.Equipment.EquipmentStats.WeaponStats;
 
 public interface IWeaponStats
 {
-    float damage { get; }
+    string Name { get; }
+    float Damage { get; }
 }
 
 public enum WeaponStatType

@@ -9,7 +9,7 @@ public class CombatResolver
 {
     public int Test_ResolveAttack_Head(ICharacter attacker, ICharacter defender)
     {
-        var damage = attacker.Weapon.Damage;
+        var damage = (int)attacker.Weapon.WeaponStats.Damage;
         var targetBodyPart = defender.Body.GetPart(BodyPartType.Head);
         ApplyDamage(damage, targetBodyPart);
 
@@ -19,7 +19,7 @@ public class CombatResolver
 
     public int ResolveAttack_SpecificPart(ICharacter attacker, ICharacter defender, IBodyPart targetBodyPart)
     {
-        var damage = attacker.Weapon.Damage;
+        var damage = (int)attacker.Weapon.WeaponStats.Damage;
         ApplyDamage(damage, targetBodyPart);
         return targetBodyPart.Effectiveness;
     
@@ -27,7 +27,7 @@ public class CombatResolver
 
     public int ResolveAttack_Random(ICharacter attacker, ICharacter defender)
     {
-        var damage = attacker.Weapon.Damage;
+        var damage = (int)attacker.Weapon.WeaponStats.Damage;
         var targetBodyPart = defender.Body.GetRandomPart();
         ApplyDamage(damage, targetBodyPart);
         Console.WriteLine(targetBodyPart.Name);

@@ -2,11 +2,15 @@ using TextBasedGame.Equipment.EquipmentStats.WeaponStats;
 
 namespace TextBasedGame.Equipment.Weapons;
 
-// public IBodyParts Head { get; } = new Head();
-
-public class Sword (IWeaponStats weaponStats) : IWeapons
+public class Sword(IWeaponStats stats) : IWeapons
 {
-    public string Name => "Sword";
-    public int Damage => 10;
-    public IWeaponStats WeaponStats { get; } = weaponStats;
+    public string Name => WeaponStats.Name;
+    public int Damage => (int)WeaponStats.Damage;
+    public IWeaponStats WeaponStats { get; } = stats;
+
+    public static Sword Create()
+    {
+        var stats = WeaponLoader.LoadStatsFromFile(GamePaths.WEAPON_STATS + "BasicSword.json");
+        return new Sword(stats);
+    }
 }
