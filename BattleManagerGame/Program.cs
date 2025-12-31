@@ -32,8 +32,7 @@ internal static class Program
         var ogreStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
         var enemy = new GenericTestCharacter("Ogre", ogreStats, club);
 
-        var dmg = new DamageCalculator(player, enemy).Calculate();
-        Console.WriteLine(dmg.ToString());
+        new DamageCalculator(player, enemy).CalculateWithDebug();
 
 
 
