@@ -18,10 +18,10 @@ public class UnitTest1
         var sword = Sword.Create();
         
         var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
-        var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, sword);
+        var enemy = new TestCharacter("Orc", baseStats:enemyStats, sword);
 
         var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
-        var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
+        var hero = new TestCharacter("Halfdan", baseStats:heroStats, sword);
         
         var resolver = new Combat(hero, enemy);
 
@@ -47,10 +47,10 @@ public class UnitTest1
         var sword = Sword.Create();
         
         var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
-        var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, sword);
+        var enemy = new TestCharacter("Orc", baseStats:enemyStats, sword);
 
         var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
-        var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
+        var hero = new TestCharacter("Halfdan", baseStats:heroStats, sword);
         
         var resolver = new Combat(hero, enemy);
 
@@ -79,10 +79,10 @@ public class UnitTest1
         var club = Club.Create();
         
         var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
-        var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, club);
+        var enemy = new TestCharacter("Orc", baseStats:enemyStats, club);
 
         var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
-        var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
+        var hero = new TestCharacter("Halfdan", baseStats:heroStats, sword);
         
         var resolverHero = new Combat(hero, enemy);
         var resolverEnemy = new Combat(enemy, hero);

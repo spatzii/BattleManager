@@ -13,7 +13,7 @@ public class CharacterData
 
 public class CharacterLoader
 {
-    public static Characters.CharacterStats.CharacterStats LoadStatsFromFile(string filePath)
+    public static Characters.CharacterStats.BaseStats LoadStatsFromFile(string filePath)
     {
         // 1. Read the raw text from the file
         var jsonString = File.ReadAllText(filePath);
@@ -28,7 +28,7 @@ public class CharacterLoader
         var data = JsonSerializer.Deserialize<CharacterData>(jsonString, options);
 
         // 4. Create the actual Stats class using the dictionary we just unpacked
-        return new Characters.CharacterStats.CharacterStats(data!.baseStats);
+        return new Characters.CharacterStats.BaseStats(data!.baseStats);
     }
 }
 

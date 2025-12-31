@@ -1,10 +1,10 @@
 namespace TextBasedGame.Characters.Stats;
 
-public interface ICharacterStats
+public interface IBaseStats
 {
     float Melee { get; }
     float Accuracy { get; }
-    float Armor { get; }
+    float Evasion { get; }
     float Strength { get; }
 }
 
@@ -12,6 +12,7 @@ public enum CharacterStatType
 {
     Melee,
     Accuracy,
-    Armor,
-    Strength
+    Evasion,
+    Strength,
+    Stamina
 }

@@ -4,7 +4,8 @@
   "baseStats": {
     "melee": 10,
     "accuracy": 60,
-    "armor": 5,
-    "strength": 6
+    "evasion": 5,
+    "strength": 6,
+    "stamina": 80,
   }
 }

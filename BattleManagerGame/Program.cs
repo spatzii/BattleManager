@@ -27,12 +27,13 @@ internal static class Program
         var club = Club.Create();
         
         var bowieStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
-        var player = new GenericTestCharacter("Bowie", bowieStats, sword);
+        var player = new TestCharacter("Bowie", bowieStats, sword);
 
         var ogreStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
-        var enemy = new GenericTestCharacter("Ogre", ogreStats, club);
+        var enemy = new TestCharacter("Ogre", ogreStats, club);
 
-        new DamageCalculator(player, enemy).CalculateWithDebug();
+        var dmg = new DamageCalculator(player, enemy).CalculateWithDebug();
+        
 
 
 

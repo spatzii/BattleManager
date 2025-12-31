@@ -16,4 +16,10 @@ public class RoundManager(ICharacter hero, ICharacter enemy)
     {
         return true;
     }
+
+    public void Attack()
+    {
+        var damageRound = new DamageCalculator(_hero, _enemy).Calculate();
+        // var armorAfterAttack = _enemy.Stats.Evasion- damageRound.NetAdvantage;
+    }
 }

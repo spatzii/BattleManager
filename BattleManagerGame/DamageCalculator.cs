@@ -18,14 +18,13 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     public DamageResult Calculate()
     {
         var rawAttackValue = CalculateAttackValue();
-        var rawDefenseValue = CalculateDefenceValue();
-        var netAdvantage = rawAttackValue - rawDefenseValue;
+        var netAdvantage = rawAttackValue - _defender.Stats.Evasion;
         var normalizedValue = NormalizeToScale(netAdvantage);
 
         return new DamageResult
         {
             RawAttackValue = rawAttackValue,
-            RawDefenseValue = rawDefenseValue,
+            RawDefenseValue = _defender.Stats.Evasion,
             NetAdvantage = netAdvantage,
             NormalizedValue = normalizedValue
         };
@@ -54,8 +53,8 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
 
     private float CalculateDefenceValue()
     {
-        var armorValue = _defender.Stats.Armor;
-        return armorValue;
+        var evasionValue = _defender.Stats.Evasion;
+        return evasionValue;
     }
 
     private float GetVariance()
@@ -134,20 +133,20 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     Console.WriteLine($"DEFENDER: {_defender.Name}");
     Console.WriteLine("────────────────────────────────────────────────────────────────");
     
-    var armorValue = _defender.Stats.Armor;
-    Console.WriteLine($"  Armor Value: {armorValue:F1}");
+    var evasionValue = _defender.Stats.Evasion;
+    Console.WriteLine($"  Evasion Value: {evasionValue:F1}");
     Console.WriteLine();
     Console.WriteLine($"  Defense Calculation:");
-    Console.WriteLine($"    - Final Defense Value: {armorValue:F1}");
+    Console.WriteLine($"    - Final Defense Value: {evasionValue:F1}");
     Console.WriteLine();
 
     // RESULT SECTION
-    var netAdvantage = finalAttackValue - armorValue;
+    var netAdvantage = finalAttackValue - evasionValue;
     
     Console.WriteLine("RESULT");
     Console.WriteLine("────────────────────────────────────────────────────────────────");
     Console.WriteLine($"  Raw Attack Value: {finalAttackValue:F2}");
-    Console.WriteLine($"  Raw Defense Value: {armorValue:F2}");
+    Console.WriteLine($"  Raw Defense Value: {evasionValue:F2}");
     Console.WriteLine($"  Net Advantage: {netAdvantage:F2} (attack - defense)");
     Console.WriteLine();
     
@@ -180,7 +179,7 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     return new DamageResult
     {
         RawAttackValue = finalAttackValue,
-        RawDefenseValue = armorValue,
+        RawDefenseValue = evasionValue,
         NetAdvantage = netAdvantage,
         NormalizedValue = normalizedValue
     };
