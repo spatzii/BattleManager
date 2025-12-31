@@ -1,6 +1,6 @@
 ﻿using TextBasedGame;
 using TextBasedGame.Characters;
-using TextBasedGame.Characters.CharacterData;
+using TextBasedGame.Characters.CharacterStats;
 using TextBasedGame.Characters.Stats;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.Equipment.EquipmentStats.WeaponStats;
@@ -23,13 +23,13 @@ public class UnitTest1
         var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
         var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
         
-        var resolver = new CombatResolver();
+        var resolver = new Combat(hero, enemy);
 
         var startEffectiveness = enemy.Body.GetPart(BodyPartType.Head).Effectiveness; // currently 100 in Head
 
         // Act
-        var afterFirstAttack = resolver.Test_ResolveAttack_Head(hero, enemy);
-        var afterSecondAttack = resolver.Test_ResolveAttack_Head(hero, enemy);
+        var afterFirstAttack = resolver.TestResolveAttackHead();
+        var afterSecondAttack = resolver.TestResolveAttackHead();
 
         // Assert (persistence: the second call builds on the state changed by the first)
         Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
@@ -52,21 +52,53 @@ public class UnitTest1
         var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
         var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
         
-        var resolver = new CombatResolver();
+        var resolver = new Combat(hero, enemy);
 
-        var rand_part = enemy.Body.GetRandomPart();
+        var randPart = enemy.Body.GetRandomPart();
 
-        var startEffectiveness = rand_part.Effectiveness; // currently 100 in random
+        var startEffectiveness = randPart.Effectiveness; // currently 100 in random
 
         // Act
-        var afterFirstAttack = resolver.ResolveAttack_SpecificPart(hero, enemy, rand_part);
-        var afterSecondAttack = resolver.ResolveAttack_SpecificPart(hero, enemy, rand_part);
+        var afterFirstAttack = resolver.ResolveAttack_SpecificPart(randPart);
+        var afterSecondAttack = resolver.ResolveAttack_SpecificPart(randPart);
 
         // Assert (persistence: the second call builds on the state changed by the first)
         Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
         Assert.Equal(startEffectiveness - (2 * hero.Weapon!.WeaponStats.Damage), afterSecondAttack);
 
         // Also assert the defender's state actually changed (not just the return value)
-        Assert.Equal(afterSecondAttack, rand_part.Effectiveness);
+        Assert.Equal(afterSecondAttack, randPart.Effectiveness);
+    }
+
+    [Fact]
+    public void ResolveAttack_Sword_vs_Club_TestAttackHead()
+    {
+        // Arrange
+
+        var sword = Sword.Create();
+        var club = Club.Create();
+        
+        var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
+        var enemy = new GenericTestCharacter("Orc", characterStats:enemyStats, club);
+
+        var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
+        var hero = new GenericTestCharacter("Halfdan", characterStats:heroStats, sword);
+        
+        var resolverHero = new Combat(hero, enemy);
+        var resolverEnemy = new Combat(enemy, hero);
+        var heroStartEffectiveness = hero.Body.GetPart(BodyPartType.Head).Effectiveness; // currently 100 in Head
+        var enemyStartEffectiveness = enemy.Body.GetPart(BodyPartType.Head).Effectiveness; // currently 100 in Head
+        
+        // Act
+
+        var enemyAfterFirstAttack = resolverHero.TestResolveAttackHead();
+        var heroAfterFirstAttack = resolverEnemy.TestResolveAttackHead();
+        
+        // Assert
+        Assert.True(heroAfterFirstAttack > enemyAfterFirstAttack);
+        Assert.Equal(92, heroAfterFirstAttack);
+        Assert.Equal(90, enemyAfterFirstAttack);
+        
+
     }
 }

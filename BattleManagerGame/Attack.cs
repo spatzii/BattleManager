@@ -5,31 +5,35 @@ using TextBasedGame.DamageMechanics.BodyParts;
 
 namespace TextBasedGame;
 
-public class CombatResolver
+public class Combat (ICharacter attacker, ICharacter defender)
 {
-    public int Test_ResolveAttack_Head(ICharacter attacker, ICharacter defender)
+    private readonly ICharacter _attacker = attacker;
+    private readonly ICharacter _defender = defender;
+    
+    // Weapon damage or melee
+    private int BaseDamage => (int)(_attacker.Weapon?.WeaponStats.Damage ?? _attacker.CharacterStats.Melee); 
+    
+    
+    public int TestResolveAttackHead()
     {
-        var damage = (int)attacker.Weapon.WeaponStats.Damage;
-        var targetBodyPart = defender.Body.GetPart(BodyPartType.Head);
-        ApplyDamage(damage, targetBodyPart);
+        var targetBodyPart = _defender.Body.GetPart(BodyPartType.Head);
+        ApplyDamage(BaseDamage, targetBodyPart);
 
         return targetBodyPart.Effectiveness;
 
     }
 
-    public int ResolveAttack_SpecificPart(ICharacter attacker, ICharacter defender, IBodyPart targetBodyPart)
+    public int ResolveAttack_SpecificPart(IBodyPart targetBodyPart)
     {
-        var damage = (int)attacker.Weapon.WeaponStats.Damage;
-        ApplyDamage(damage, targetBodyPart);
+        ApplyDamage(BaseDamage, targetBodyPart);
         return targetBodyPart.Effectiveness;
     
     }
 
-    public int ResolveAttack_Random(ICharacter attacker, ICharacter defender)
+    public int ResolveAttack_Random()
     {
-        var damage = (int)attacker.Weapon.WeaponStats.Damage;
-        var targetBodyPart = defender.Body.GetRandomPart();
-        ApplyDamage(damage, targetBodyPart);
+        var targetBodyPart = _defender.Body.GetRandomPart();
+        ApplyDamage(BaseDamage, targetBodyPart);
         Console.WriteLine(targetBodyPart.Name);
         Console.WriteLine(targetBodyPart.Effectiveness);
         return targetBodyPart.Effectiveness;
@@ -41,8 +45,6 @@ public class CombatResolver
         target.Effectiveness = Math.Max(0, target.Effectiveness - dmg);
         
     }
-
-    
     
 }
 

@@ -1,18 +1,19 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TextBasedGame.Characters.Stats;
-namespace TextBasedGame.Characters.CharacterData;
+
+namespace TextBasedGame.Characters.CharacterStats;
 
 public class CharacterData
 {
-    public string CharacterType { get; set; }
-    public string DisplayName { get; set; }
+    public required string CharacterType { get; set; }
+    public required string DisplayName { get; set; }
     public Dictionary<CharacterStatType, float> baseStats { get; set; }
 }
 
 public class CharacterLoader
 {
-    public static CharacterStats.CharacterStats LoadStatsFromFile(string filePath)
+    public static Characters.CharacterStats.CharacterStats LoadStatsFromFile(string filePath)
     {
         // 1. Read the raw text from the file
         var jsonString = File.ReadAllText(filePath);
@@ -27,7 +28,7 @@ public class CharacterLoader
         var data = JsonSerializer.Deserialize<CharacterData>(jsonString, options);
 
         // 4. Create the actual Stats class using the dictionary we just unpacked
-        return new CharacterStats.CharacterStats(data.baseStats);
+        return new Characters.CharacterStats.CharacterStats(data!.baseStats);
     }
 }
 

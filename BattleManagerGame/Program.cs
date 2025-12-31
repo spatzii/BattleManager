@@ -1,6 +1,6 @@
 ﻿
 using TextBasedGame.Characters;
-using TextBasedGame.Characters.CharacterData;
+using TextBasedGame.Characters.CharacterStats;
 using TextBasedGame.Equipment.EquipmentStats.WeaponStats;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.Equipment.Weapons;
@@ -25,6 +25,9 @@ internal static class Program
 
         var sword = Sword.Create();
         Console.WriteLine(sword.Damage);
+        var bowieStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
+        var player = new GenericTestCharacter("Bowie", bowieStats, sword);
+        Console.WriteLine(player.CharacterStats.Armor);
 
     }
 }

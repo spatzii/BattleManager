@@ -2,17 +2,9 @@ using TextBasedGame.DamageMechanics.Body;
 
 namespace TextBasedGame.DamageMechanics.BodyParts;
 
-public class BodyPart : IBodyPart
+public class BodyPart(string name, BodyPartType type) : IBodyPart
 {
-    public string Name { get; }
-    public BodyPartType Type { get; }
-    public int Effectiveness { get; set; }
-    
-    public BodyPart(string name, BodyPartType type)
-    {
-        Name = name;
-        Type = type;
-        Effectiveness = 100;
-    }
-    
+    public string Name { get; } = name;
+    public BodyPartType Type { get; } = type;
+    public int Effectiveness { get; set; } = 100;
 }
