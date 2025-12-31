@@ -2,6 +2,7 @@
   "weaponType": "Sword",
   "displayName": "Sword",
   "baseStats": {
-    "damage": 10
+    "damage": 10,
+    "minStrengthRequired": 4
   }
 }

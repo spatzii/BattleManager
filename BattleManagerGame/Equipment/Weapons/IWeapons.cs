@@ -4,6 +4,6 @@ namespace TextBasedGame.Equipment.Weapons;
 
 public interface IWeapons
 {
-    public IWeaponStats WeaponStats { get; }
+    public IWeaponStats Stats { get; }
     
 }

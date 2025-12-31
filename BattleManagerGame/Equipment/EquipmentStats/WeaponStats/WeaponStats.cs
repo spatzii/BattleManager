@@ -12,4 +12,5 @@ public class WeaponStats: IWeaponStats
         _weaponStats = weaponStats;
     }
     public float Damage => _weaponStats[WeaponStatType.Damage];
+    public float MinStrengthRequired => _weaponStats[WeaponStatType.MinStrengthRequired];
 }

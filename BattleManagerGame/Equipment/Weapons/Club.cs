@@ -4,9 +4,9 @@ namespace TextBasedGame.Equipment.Weapons;
 
 public class Club(IWeaponStats stats) : IWeapons
 {
-    public string Name => WeaponStats.Name;
-    public int Damage => (int)WeaponStats.Damage;
-    public IWeaponStats WeaponStats { get; } = stats;
+    public string Name => Stats.Name;
+    public int Damage => (int)Stats.Damage;
+    public IWeaponStats Stats { get; } = stats;
 
     public static Club Create()
     {

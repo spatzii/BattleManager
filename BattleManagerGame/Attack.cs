@@ -11,7 +11,7 @@ public class Combat (ICharacter attacker, ICharacter defender)
     private readonly ICharacter _defender = defender;
     
     // Weapon damage or melee
-    private int BaseDamage => (int)(_attacker.Weapon?.WeaponStats.Damage ?? _attacker.CharacterStats.Melee); 
+    private int BaseDamage => (int)(_attacker.Weapon?.Stats.Damage ?? _attacker.Stats.Melee); 
     
     
     public int TestResolveAttackHead()

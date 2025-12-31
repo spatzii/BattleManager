@@ -10,5 +10,5 @@ public class GenericTestCharacter(string name, ICharacterStats characterStats, I
     private readonly IBody _body = new Body();
     public IBody Body => _body;
     public IWeapons? Weapon { get; private set; } = weapon;
-    public ICharacterStats CharacterStats { get; } = characterStats;
+    public ICharacterStats Stats { get; } = characterStats;
 }

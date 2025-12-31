@@ -32,8 +32,8 @@ public class UnitTest1
         var afterSecondAttack = resolver.TestResolveAttackHead();
 
         // Assert (persistence: the second call builds on the state changed by the first)
-        Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
-        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.WeaponStats.Damage), afterSecondAttack);
+        Assert.Equal(startEffectiveness - hero.Weapon!.Stats.Damage, afterFirstAttack);
+        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.Stats.Damage), afterSecondAttack);
 
         // Also assert the defender's state actually changed (not just the return value)
         Assert.Equal(afterSecondAttack, enemy.Body.GetPart(BodyPartType.Head).Effectiveness);
@@ -63,8 +63,8 @@ public class UnitTest1
         var afterSecondAttack = resolver.ResolveAttack_SpecificPart(randPart);
 
         // Assert (persistence: the second call builds on the state changed by the first)
-        Assert.Equal(startEffectiveness - hero.Weapon!.WeaponStats.Damage, afterFirstAttack);
-        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.WeaponStats.Damage), afterSecondAttack);
+        Assert.Equal(startEffectiveness - hero.Weapon!.Stats.Damage, afterFirstAttack);
+        Assert.Equal(startEffectiveness - (2 * hero.Weapon!.Stats.Damage), afterSecondAttack);
 
         // Also assert the defender's state actually changed (not just the return value)
         Assert.Equal(afterSecondAttack, randPart.Effectiveness);

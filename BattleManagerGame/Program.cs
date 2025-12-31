@@ -24,10 +24,18 @@ internal static class Program
         //
 
         var sword = Sword.Create();
-        Console.WriteLine(sword.Damage);
+        var club = Club.Create();
+        
         var bowieStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
         var player = new GenericTestCharacter("Bowie", bowieStats, sword);
-        Console.WriteLine(player.CharacterStats.Armor);
+
+        var ogreStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
+        var enemy = new GenericTestCharacter("Ogre", ogreStats, club);
+
+        var dmg = new DamageCalculator(player, enemy).Calculate();
+        Console.WriteLine(dmg.ToString());
+
+
 
     }
 }

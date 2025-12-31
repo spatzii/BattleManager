@@ -2,6 +2,7 @@
   "weaponType": "Club",
   "displayName": "Club",
   "baseStats": {
-    "damage": 8
+    "damage": 8,
+    "minStrengthRequired": 3
   }
 }
