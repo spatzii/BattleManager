@@ -17,9 +17,13 @@ public class RoundManager(ICharacter hero, ICharacter enemy)
         return true;
     }
 
-    public void Attack()
+    public static void Attack(ICharacter attacker, ICharacter defender)
     {
-        var damageRound = new DamageCalculator(_hero, _enemy).Calculate();
+        var damageRound = new DamageCalculator(attacker, defender).Calculate();
         // var armorAfterAttack = _enemy.Stats.Evasion- damageRound.NetAdvantage;
-    }
+        Console.WriteLine($"{attacker.Name} did {damageRound.RawAttackValue} to " +
+                          $"{defender.Name}, meaning {damageRound.NormalizedValue} normalized value.");
+        attacker.GameState.ConsumeStamina(10);
+        Console.WriteLine($"{attacker.Name} has {attacker.GameState.CurrentStamina} stamina left.");
+}
 }

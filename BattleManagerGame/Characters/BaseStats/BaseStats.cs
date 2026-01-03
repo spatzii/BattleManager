@@ -1,6 +1,4 @@
-using TextBasedGame.Characters.Stats;
-
-namespace TextBasedGame.Characters.CharacterStats;
+namespace TextBasedGame.Characters.BaseStats;
 
 public class BaseStats : IBaseStats
 {

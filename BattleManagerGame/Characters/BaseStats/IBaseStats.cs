@@ -1,4 +1,4 @@
-namespace TextBasedGame.Characters.Stats;
+namespace TextBasedGame.Characters.BaseStats;
 
 public interface IBaseStats
 {
@@ -6,6 +6,7 @@ public interface IBaseStats
     float Accuracy { get; }
     float Evasion { get; }
     float Strength { get; }
+    float Stamina { get; }
 }
 
 public enum CharacterStatType

@@ -23,10 +23,10 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
 
         return new DamageResult
         {
-            RawAttackValue = rawAttackValue,
-            RawDefenseValue = _defender.Stats.Evasion,
-            NetAdvantage = netAdvantage,
-            NormalizedValue = normalizedValue
+            RawAttackValue = rawAttackValue, // Weapon damage times access through strength
+            RawDefenseValue = _defender.Stats.Evasion, // Just evasion atm 
+            NetAdvantage = netAdvantage, // Raw attack value minus the defense/evasion
+            NormalizedValue = normalizedValue // Net advantage that goes through 0-1 normalization
         };
     }
 

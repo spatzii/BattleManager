@@ -1,5 +1,5 @@
-﻿using TextBasedGame.Characters.CharacterState;
-using TextBasedGame.Characters.Stats;
+﻿using TextBasedGame.Characters.BaseStats;
+using TextBasedGame.Characters.CharacterState;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.Equipment.Weapons;
 
@@ -11,7 +11,7 @@ public interface ICharacter
     public IBody Body { get; }
     public IWeapons? Weapon {get;}
     public IBaseStats Stats { get; }
-    public ICharacterState State { get; }
+    public ICharacterState GameState { get; }
     
     
 }
