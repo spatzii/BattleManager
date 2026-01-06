@@ -15,4 +15,4 @@ public class BaseStats : IBaseStats
     public float Strength => _baseStats[CharacterStatType.Strength];
     public float Stamina => _baseStats[CharacterStatType.Stamina];
 
-}
+}   

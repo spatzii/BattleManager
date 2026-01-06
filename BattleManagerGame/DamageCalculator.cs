@@ -4,9 +4,6 @@ namespace TextBasedGame;
 
 public class DamageCalculator(ICharacter attacker, ICharacter defender)
 {
-    private readonly ICharacter _attacker = attacker;
-    private readonly ICharacter _defender = defender;
-
     // Configuration for normalization - tune these as you add complexity
     private const float ExpectedMinResult = -20f;  // Weak attack vs heavy armor
     private const float ExpectedMaxResult = 20f;   // Strong attack vs no armor
@@ -18,13 +15,13 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     public DamageResult Calculate()
     {
         var rawAttackValue = CalculateAttackValue();
-        var netAdvantage = rawAttackValue - _defender.Stats.Evasion;
+        var netAdvantage = rawAttackValue - defender.Stats.Evasion;
         var normalizedValue = NormalizeToScale(netAdvantage);
 
         return new DamageResult
         {
             RawAttackValue = rawAttackValue, // Weapon damage times access through strength
-            RawDefenseValue = _defender.Stats.Evasion, // Just evasion atm 
+            RawDefenseValue = defender.Stats.Evasion, // Just evasion atm 
             NetAdvantage = netAdvantage, // Raw attack value minus the defense/evasion
             NormalizedValue = normalizedValue // Net advantage that goes through 0-1 normalization
         };
@@ -32,8 +29,8 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
 
     private float CalculateAttackValue()
     {
-        var weaponDamage = _attacker.Weapon?.Stats.Damage ?? _attacker.Stats.Melee;
-        var strength = _attacker.Stats.Strength;
+        var weaponDamage = attacker.Weapon?.Stats.Damage ?? attacker.Stats.Melee;
+        var strength = attacker.Stats.Strength;
         var weaponAccessPercent = CalculateWeaponAccess(strength);
         var accessibleDamage = weaponDamage * weaponAccessPercent;
         var variance = GetVariance();
@@ -44,7 +41,7 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
 
     private float CalculateWeaponAccess(float strength)
     {
-        var strengthRequirement = _attacker.Weapon.Stats.MinStrengthRequired;
+        var strengthRequirement = attacker.Weapon.Stats.MinStrengthRequired;
         // todo: min requirement check
         var strengthRatio = strength / strengthRequirement;
         var accessPercent = 1f - (float)Math.Exp(-strengthRatio);
@@ -53,7 +50,7 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
 
     private float CalculateDefenceValue()
     {
-        var evasionValue = _defender.Stats.Evasion;
+        var evasionValue = defender.Stats.Evasion;
         return evasionValue;
     }
 
@@ -89,18 +86,18 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     Console.WriteLine();
 
     // ATTACKER SECTION
-    Console.WriteLine($"ATTACKER: {_attacker.Name}");
+    Console.WriteLine($"ATTACKER: {attacker.Name}");
     Console.WriteLine("────────────────────────────────────────────────────────────────");
     
-    var weaponDamage = _attacker.Weapon?.Stats.Damage ?? _attacker.Stats.Melee;
-    var weaponName = _attacker.Weapon?.Stats.Name ?? "Unarmed";
-    var strength = _attacker.Stats.Strength;
-    var minStrengthReq = _attacker.Weapon?.Stats.MinStrengthRequired ?? 0f;
+    var weaponDamage = attacker.Weapon?.Stats.Damage ?? attacker.Stats.Melee;
+    var weaponName = attacker.Weapon?.Stats.Name ?? "Unarmed";
+    var strength = attacker.Stats.Strength;
+    var minStrengthReq = attacker.Weapon?.Stats.MinStrengthRequired ?? 0f;
     
     Console.WriteLine($"  Weapon: {weaponName} (Base Damage: {weaponDamage:F1})");
     Console.WriteLine($"  Character Stats:");
     Console.WriteLine($"    - Strength: {strength:F1}");
-    Console.WriteLine($"    - Melee: {_attacker.Stats.Melee:F1}");
+    Console.WriteLine($"    - Melee: {attacker.Stats.Melee:F1}");
     Console.WriteLine();
     
     Console.WriteLine($"  Weapon Requirements:");
@@ -130,10 +127,10 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
     Console.WriteLine();
 
     // DEFENDER SECTION
-    Console.WriteLine($"DEFENDER: {_defender.Name}");
+    Console.WriteLine($"DEFENDER: {defender.Name}");
     Console.WriteLine("────────────────────────────────────────────────────────────────");
     
-    var evasionValue = _defender.Stats.Evasion;
+    var evasionValue = defender.Stats.Evasion;
     Console.WriteLine($"  Evasion Value: {evasionValue:F1}");
     Console.WriteLine();
     Console.WriteLine($"  Defense Calculation:");

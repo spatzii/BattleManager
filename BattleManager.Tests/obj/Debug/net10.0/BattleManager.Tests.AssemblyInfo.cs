@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BattleManager.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f6931baa54ff1cca428e0294cb1d61ddeb49c5c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ff1b8cf3fbefd71c21ba57462d10dd0894e8637")]
 [assembly: System.Reflection.AssemblyProductAttribute("BattleManager.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BattleManager.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

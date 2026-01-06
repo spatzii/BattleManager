@@ -12,6 +12,6 @@ public interface ICharacter
     public IWeapons? Weapon {get;}
     public IBaseStats Stats { get; }
     public ICharacterState GameState { get; }
-    
-    
+
+    float GetOverallCondition();
 }

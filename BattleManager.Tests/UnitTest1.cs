@@ -95,9 +95,29 @@ public class UnitTest1
         
         // Assert
         Assert.True(heroAfterFirstAttack > enemyAfterFirstAttack);
-        Assert.Equal(92, heroAfterFirstAttack);
-        Assert.Equal(90, enemyAfterFirstAttack);
+        Assert.Equal(92f, heroAfterFirstAttack);
+        Assert.Equal(90f, enemyAfterFirstAttack);
+    }
+
+    [Fact]
+    public void CheckAverageEffectivenessOfLimbs()
+    {
+        var sword = Sword.Create();
+        var club = Club.Create();
+        var enemyStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
+        var enemy = new TestCharacter("Orc", baseStats:enemyStats, club);
+        var heroStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "TestDefaultHero.json");
+        var hero = new TestCharacter("Halfdan", baseStats:heroStats, sword);
+
+        var resolverHero = new Combat(hero, enemy);
         
+        // Act
+        resolverHero.TestResolveAttackHead();
+        var condition = MathF.Round(enemy.GetOverallCondition(), 1);
+
+        // assert
+        
+        Assert.Equal(98.3f, condition);
 
     }
 }

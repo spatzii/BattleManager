@@ -18,8 +18,6 @@ public class Body : IBody
         rng ??= Random.Shared;
         return _partList[rng.Next(_partList.Length)];
     }
-    
-  
     public Body()
     {
         _parts = new Dictionary<BodyPartType, IBodyPart>
@@ -33,6 +31,5 @@ public class Body : IBody
         };
         
         _partList = _parts.Values.ToArray();
-
     }
 }
