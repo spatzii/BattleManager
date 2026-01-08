@@ -34,7 +34,9 @@ internal static class Program
 
         // var dmg = new DamageCalculator(player, enemy).CalculateWithDebug();
         
-        RoundManager.Attack(player, enemy);
-        
+        // RoundManager.Attack(player, enemy);
+        // CombatResolver.ResolveAttackAgainst(player, enemy, enemy.Body.GetRandomPart());
+        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head));
+        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head));
     }
 }

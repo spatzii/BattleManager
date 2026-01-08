@@ -1,7 +1,11 @@
+using TextBasedGame.DamageMechanics.Body;
+
 namespace TextBasedGame.Characters.CharacterState;
 
 public interface ICharacterState
 {
-    public float CurrentStamina { get; set; }
-    public void ConsumeStamina(float number);
+    CharacterHealthState HealthState { get; }
+    float CurrentStamina { get; set; }
+    void ConsumeStamina(float number);
+    void UpdateHealthState(IBody body);
 }
