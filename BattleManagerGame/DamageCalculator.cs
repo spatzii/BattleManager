@@ -38,12 +38,7 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
             NetAdvantage = netAdvantage,       // Raw attack value minus the defense/evasion
             NormalizedValue = normalizedValue  // Net advantage that goes through 0-1 normalization
         };
-
-        if (showDebug)
-        {
-            PrintFullDebug(weaponDamage, strength, minStrengthReq, access, variance, accessibleDamage, result);
-        }
-
+        
         return result;
     }
 
@@ -75,58 +70,6 @@ public class DamageCalculator(ICharacter attacker, ICharacter defender)
         // but cap them so they don't break hit profile lookup
         return Math.Clamp(normalized, 0f, 1.5f);
     }
-
-    private void PrintFullDebug(float baseDmg, float str, float minReq, float access, float var, float accessible, DamageResult res)
-    {
-        Console.WriteLine("════════════════════════════════════════════════════════════════");
-        Console.WriteLine("DAMAGE CALCULATION DEBUG");
-        Console.WriteLine("════════════════════════════════════════════════════════════════");
-        Console.WriteLine();
-
-        // ATTACKER SECTION
-        Console.WriteLine($"ATTACKER: {attacker.Name}");
-        Console.WriteLine("────────────────────────────────────────────────────────────────");
-        Console.WriteLine($"  Weapon: {attacker.Weapon?.Stats.Name ?? "Unarmed"} (Base Damage: {baseDmg:F1})");
-        Console.WriteLine($"  Stats: Strength: {str:F1} | Melee: {attacker.Stats.Melee:F1}");
-        Console.WriteLine($"  Requirements: Min Strength: {minReq:F1} | Can Use: {(str >= minReq ? "YES ✓" : "NO ❌")}");
-        Console.WriteLine();
-        Console.WriteLine($"  Attack Calculation:");
-        Console.WriteLine($"    - Strength Ratio: {(str / Math.Max(minReq, 1f)):F2}");
-        Console.WriteLine($"    - Weapon Access: {access * 100:F2}% (clamped 20% - 100%)");
-        Console.WriteLine($"    - Accessible Damage: {accessible:F2} ({baseDmg:F1} × {access:F2})");
-        Console.WriteLine($"    - Variance Roll: {var:F2} (±10% RNG)");
-        Console.WriteLine($"    - Final Attack Value: {res.RawAttackValue:F2}");
-        Console.WriteLine();
-
-        // DEFENDER SECTION
-        Console.WriteLine($"DEFENDER: {defender.Name}");
-        Console.WriteLine("────────────────────────────────────────────────────────────────");
-        Console.WriteLine($"  Evasion/Defense Value: {res.RawDefenseValue:F1}");
-        Console.WriteLine();
-
-        // RESULT SECTION
-        Console.WriteLine("RESULT");
-        Console.WriteLine("────────────────────────────────────────────────────────────────");
-        Console.WriteLine($"  Net Advantage: {res.NetAdvantage:F2} (attack - defense)");
-        Console.WriteLine($"  Normalization Range: {ExpectedMinResult:F1} to {ExpectedMaxResult:F1}");
-        Console.WriteLine($"  Normalized Value: {res.NormalizedValue:F2} (clamped 0.0 to 1.5)");
-        Console.WriteLine();
-
-        string hitQuality = res.NormalizedValue switch
-        {
-            < 0.3f => "GLANCING ⚔️",
-            < 0.7f => "SOLID ⚔️⚔️",
-            < 1.2f => "HEAVY ⚔️⚔️⚔️",
-            _ => "DEVASTATING ⚔️⚔️⚔️⚔️"
-        };
-        Console.WriteLine($"  Hit Quality: {hitQuality}");
-        Console.WriteLine();
-        Console.WriteLine("════════════════════════════════════════════════════════════════");
-        Console.WriteLine();
-    }
-
-    [Obsolete("Use Calculate(true) instead")]
-    public DamageResult CalculateWithDebug() => Calculate(true);
 }
 
 public class DamageResult

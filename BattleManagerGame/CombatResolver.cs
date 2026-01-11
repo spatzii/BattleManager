@@ -17,19 +17,42 @@ public static class CombatResolver
         bool showDebug = false)
     
     {
-        // Phase 1: Calculate hit quality
-        var damageResult = new DamageCalculator(attacker, defender).Calculate(showDebug);
         
+        // Create debugger only if needed
+        var debugger = showDebug ? new CombatDebugger() : null;
+        
+        // Capture "before" state
+        var effectivenessBefore = targetPart.Effectiveness;
+        var partStateBefore = BodyPartProfile.DetermineState(targetPart.Effectiveness);
+        var healthStateBefore = defender.GameState.HealthState;
+    
+        // Phase 1: Calculate hit quality
+        var damageResult = new DamageCalculator(attacker, defender).Calculate();
+        debugger?.RecordAttackPhase(attacker, defender, damageResult);
+    
         // Phase 2: Process hit through profile system
         var hitResult = HitProfile.ProcessHit(damageResult.NormalizedValue);
-        
+        debugger?.RecordHitResolution(hitResult);
+    
         // Phase 3: Apply damage to body part
         ApplyDamage(hitResult.Damage, targetPart);
-        
+    
         // Phase 4: Update character overall health state
         defender.GameState.UpdateHealthState(defender.Body);
-        
-        // Phase 5: Output narrative (what player sees)
+    
+        // Phase 5: Record body effect and print debug
+        var avgEffectiveness = (float)defender.Body.Parts.Values.Average(p => p.Effectiveness);
+        debugger?.RecordBodyEffect(
+            targetPart,
+            effectivenessBefore,
+            partStateBefore,
+            healthStateBefore,
+            defender.GameState.HealthState,
+            avgEffectiveness);
+    
+        debugger?.Print();
+    
+        // Phase 6: Output narrative (what player sees)
         DisplayCombatResult(attacker, defender, targetPart, hitResult);
     }
     

@@ -36,7 +36,7 @@ internal static class Program
         
         // RoundManager.Attack(player, enemy);
         // CombatResolver.ResolveAttackAgainst(player, enemy, enemy.Body.GetRandomPart());
-        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head));
-        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head));
+        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head), showDebug:true);
+        player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head), showDebug:true);
     }
 }
