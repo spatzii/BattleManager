@@ -12,18 +12,22 @@ public class RoundManager(ICharacter hero, ICharacter enemy)
         return IsCharacterAlive(_hero);
     }
 
-    private bool IsCharacterAlive(ICharacter character)
+    private static bool IsCharacterAlive(ICharacter character)
     {
-        return true;
+        return character.GetOverallCondition() > 0;
     }
 
-    public static void Attack(ICharacter attacker, ICharacter defender)
+    public void Attack(ICharacter attacker, ICharacter defender)
     {
-        var damageRound = new DamageCalculator(attacker, defender).Calculate();
-        // var armorAfterAttack = _enemy.Stats.Evasion- damageRound.NetAdvantage;
-        Console.WriteLine($"{attacker.Name} did {damageRound.RawAttackValue} to " +
-                          $"{defender.Name}, meaning {damageRound.NormalizedValue} normalized value.");
-        attacker.GameState.ConsumeStamina(10);
-        Console.WriteLine($"{attacker.Name} has {attacker.GameState.CurrentStamina} stamina left.");
-}
+        if (IsCharacterAlive(defender))
+        {
+            attacker.ResolveAttackAgainst(defender, defender.Body.GetRandomPart(), showDebug: true);
+        }
+        else
+        {
+            Console.WriteLine($"{defender.Name} is dead!");
+        }
+        
+    }
+
 }
