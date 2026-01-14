@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using TextBasedGame.Characters;
 using TextBasedGame.DamageMechanics.BodyParts;
 

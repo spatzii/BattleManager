@@ -1,5 +1,6 @@
 // 1. The qualitative states
 
+using System;
 using TextBasedGame.DamageMechanics.BodyParts;
 
 namespace TextBasedGame;

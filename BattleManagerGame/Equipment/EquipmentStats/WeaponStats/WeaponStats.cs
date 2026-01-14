@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TextBasedGame.Equipment.EquipmentStats.WeaponStats;
 
 namespace TextBasedGame.Equipment.EquipmentStats.WeaponStats;

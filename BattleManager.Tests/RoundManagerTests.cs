@@ -2,6 +2,7 @@ using TextBasedGame;
 using TextBasedGame.Characters;
 using TextBasedGame.Characters.CharacterStats;
 using TextBasedGame.DamageMechanics.Body;
+using Xunit;
 
 namespace BattleManager.Tests;
 

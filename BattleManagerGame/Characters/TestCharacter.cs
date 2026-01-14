@@ -1,4 +1,6 @@
-﻿using TextBasedGame.Characters.BaseStats;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TextBasedGame.Characters.BaseStats;
 using TextBasedGame.Characters.CharacterState;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.Equipment.Weapons;

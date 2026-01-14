@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TextBasedGame.Characters.BaseStats;
 
 public class BaseStats : IBaseStats
