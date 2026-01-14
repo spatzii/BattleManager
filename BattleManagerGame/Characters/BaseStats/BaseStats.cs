@@ -2,19 +2,13 @@ using System.Collections.Generic;
 
 namespace TextBasedGame.Characters.BaseStats;
 
-public class BaseStats : IBaseStats
+public class BaseStats(Dictionary<CharacterStatType, float> baseStats) : IBaseStats
 {
-    private readonly Dictionary<CharacterStatType, float> _baseStats;
-    
-    public BaseStats(Dictionary<CharacterStatType, float> baseStats)
-    {
-        _baseStats = baseStats;
-    }
-
-    public float Melee => _baseStats[CharacterStatType.Melee];
-    public float Accuracy => _baseStats[CharacterStatType.Accuracy];
-    public float Evasion => _baseStats[CharacterStatType.Evasion];
-    public float Strength => _baseStats[CharacterStatType.Strength];
-    public float Stamina => _baseStats[CharacterStatType.Stamina];
+    public float Melee => baseStats[CharacterStatType.Melee];
+    public float Accuracy => baseStats[CharacterStatType.Accuracy];
+    public float Evasion => baseStats[CharacterStatType.Evasion];
+    public float Strength => baseStats[CharacterStatType.Strength];
+    public float Stamina => baseStats[CharacterStatType.Stamina];
+    public float Initative => baseStats[CharacterStatType.Initiative];
 
 }   

@@ -3,6 +3,7 @@
   "displayName": "Ogre",
   "baseStats": {
     "melee": 10,
+    "initiative": 3,
     "accuracy": 60,
     "evasion": 5,
     "strength": 6,

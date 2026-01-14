@@ -7,6 +7,7 @@ public interface IBaseStats
     float Evasion { get; }
     float Strength { get; }
     float Stamina { get; }
+    float Initative { get; }
 }
 
 public enum CharacterStatType
@@ -15,5 +16,6 @@ public enum CharacterStatType
     Accuracy,
     Evasion,
     Strength,
-    Stamina
+    Stamina,
+    Initiative
 }
