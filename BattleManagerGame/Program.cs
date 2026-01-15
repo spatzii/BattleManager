@@ -21,13 +21,8 @@ internal static class Program
         var ogreStats = CharacterLoader.LoadStatsFromFile(GamePaths.CHARACTER_STATS + "Ogre.json");
         var enemy = new TestCharacter("Ogre", ogreStats, club);
 
-        // var dmg = new DamageCalculator(player, enemy).CalculateWithDebug();
-        
-        // RoundManager.Attack(player, enemy);
-        // CombatResolver.ResolveAttackAgainst(player, enemy, enemy.Body.GetRandomPart());
-        // player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head), showDebug:true);
-        // player.ResolveAttackAgainst(enemy, enemy.Body.GetPart(BodyPartType.Head), showDebug:true);
-        var roundOne = new RoundManager(player, enemy);
-        roundOne.ExecuteAttack();
+        var battle = new BattleMenu(player, enemy);
+        battle.StartBattle();
+
     }
 }
