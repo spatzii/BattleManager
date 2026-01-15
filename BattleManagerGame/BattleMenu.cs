@@ -1,4 +1,5 @@
 using TextBasedGame.Characters;
+using TextBasedGame.DamageMechanics.Body;
 
 namespace TextBasedGame;
 
@@ -53,7 +54,7 @@ public class BattleMenu
         switch (char.ToLower(input))
         {
             case 'a':
-                ExecutePlayerAttack();
+                DisplayTargetMenu();
                 break;
             case 'd':
                 ExecuteDefend();
@@ -70,10 +71,61 @@ public class BattleMenu
         }
     }
 
-    private void ExecutePlayerAttack()
+    private void DisplayTargetMenu()
     {
-        Console.WriteLine($"\n  You strike at the {_enemy.Name}!");
-        _player.ResolveAttackAgainst(_enemy, _enemy.Body.GetRandomPart(), showDebug: false);
+        Console.WriteLine("\n  Select target:");
+        Console.WriteLine("  [1] Head");
+        Console.WriteLine("  [2] Torso");
+        Console.WriteLine("  [3] Left Arm");
+        Console.WriteLine("  [4] Right Arm");
+        Console.WriteLine("  [5] Left Leg");
+        Console.WriteLine("  [6] Right Leg");
+        Console.WriteLine("  [R] Random");
+        Console.WriteLine("  [C] Cancel");
+        Console.Write("\n  Target: ");
+
+        var input = Console.ReadKey(intercept: true).KeyChar;
+        Console.WriteLine(input);
+
+        switch (char.ToLower(input))
+        {
+            case '1':
+                ExecutePlayerAttack(BodyPartType.Head);
+                break;
+            case '2':
+                ExecutePlayerAttack(BodyPartType.Torso);
+                break;
+            case '3':
+                ExecutePlayerAttack(BodyPartType.LeftArm);
+                break;
+            case '4':
+                ExecutePlayerAttack(BodyPartType.RightArm);
+                break;
+            case '5':
+                ExecutePlayerAttack(BodyPartType.LeftLeg);
+                break;
+            case '6':
+                ExecutePlayerAttack(BodyPartType.RightLeg);
+                break;
+            case 'r':
+                ExecutePlayerAttack(null);
+                break;
+            case 'c':
+                return;
+            default:
+                Console.WriteLine("  Invalid target.");
+                return;
+        }
+    }
+
+    private void ExecutePlayerAttack(BodyPartType? targetType)
+    {
+        var targetPart = targetType.HasValue
+            ? _enemy.Body.GetPart(targetType.Value)
+            : _enemy.Body.GetRandomPart();
+
+        Console.WriteLine($"\n  You strike at the {_enemy.Name}'s {targetPart.Name}!");
+        _player.ResolveAttackAgainst(_enemy, targetPart, showDebug: false);
     }
 
     private void ExecuteDefend()
