@@ -8,16 +8,17 @@ public class BattleMenu
     private readonly ICharacter _player;
     private readonly ICharacter _enemy;
     private bool _battleOver;
+    private bool _debugFlag;
 
     public BattleMenu(ICharacter player, ICharacter enemy)
     {
         _player = player;
         _enemy = enemy;
+        Console.WriteLine($"\n⚔️  {_enemy.Name} appears!\n");
     }
 
     public void StartBattle()
     {
-        Console.WriteLine($"\n⚔️  {_enemy.Name} appears!\n");
         
         while (!_battleOver)
         {
@@ -42,7 +43,7 @@ public class BattleMenu
 
     private void DisplayMenu()
     {
-        Console.WriteLine("\n  [A]ttack  |  [D]efend  |  [P]otions  |  [F]lee\n");
+        Console.WriteLine($"\n  [A]ttack  |  [D]efend  |  [P]otions  |  [F]lee | De[b]ug: {_debugFlag.ToString()}\n");
         Console.Write("  Your action: ");
     }
 
@@ -64,6 +65,10 @@ public class BattleMenu
                 break;
             case 'f':
                 AttemptFlee();
+                break;
+            case 'b':
+                DebugFlipper();
+                StartBattle();
                 break;
             default:
                 Console.WriteLine("  Unknown command.");
@@ -125,7 +130,7 @@ public class BattleMenu
             : _enemy.Body.GetRandomPart();
 
         Console.WriteLine($"\n  You strike at the {_enemy.Name}'s {targetPart.Name}!");
-        _player.ResolveAttackAgainst(_enemy, targetPart, showDebug: false);
+        _player.ResolveAttackAgainst(_enemy, targetPart, showDebug: _debugFlag);
     }
 
     private void ExecuteDefend()
@@ -168,5 +173,10 @@ public class BattleMenu
             Console.WriteLine($"\n  💀  {_player.Name} has been slain...");
             _battleOver = true;
         }
+    }
+
+    private void DebugFlipper()
+    {
+        _debugFlag = !_debugFlag;
     }
 }

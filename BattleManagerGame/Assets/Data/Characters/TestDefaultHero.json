@@ -7,6 +7,7 @@
     "evasion": 6,
     "strength": 4,
     "stamina": 100,
-    "initiative": 7
+    "initiative": 7,
+    "startingHealth": 20
   }
 }

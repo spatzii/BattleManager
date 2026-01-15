@@ -62,6 +62,7 @@ internal class StubBaseStats : IBaseStats
     public float Strength => 50f;
     public float Stamina => 100f;
     public float Initative { get; }
+    public float StartingHealth => 20f;
 
     public StubBaseStats(float initiative)
     {

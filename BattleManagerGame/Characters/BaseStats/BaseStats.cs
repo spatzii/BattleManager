@@ -10,5 +10,6 @@ public class BaseStats(Dictionary<CharacterStatType, float> baseStats) : IBaseSt
     public float Strength => baseStats[CharacterStatType.Strength];
     public float Stamina => baseStats[CharacterStatType.Stamina];
     public float Initative => baseStats[CharacterStatType.Initiative];
+    public float StartingHealth => baseStats[CharacterStatType.StartingHealth];
 
 }   
