@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using TextBasedGame.Characters;
 using TextBasedGame.DamageMechanics.BodyParts;
 
@@ -34,7 +35,13 @@ public class CombatDebugger
     private BodyPartHealthState _partStateAfter;
     private CharacterHealthState _healthStateBefore;
     private CharacterHealthState _healthStateAfter;
-    private float _averageEffectiveness;
+    private float _health;
+
+    private static readonly string Timestamp = DateTime.Now.ToString("yyyy_MM_dd HHmmss");
+    private static readonly string FileName = $"combat_log {Timestamp}.txt";
+    public bool LogToFile { get; set; } = false;
+    private readonly string _logFilePath = 
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", FileName);
 
     public void RecordAttackPhase(
         ICharacter attacker, 
@@ -73,7 +80,7 @@ public class CombatDebugger
         BodyPartHealthState partStateBefore,
         CharacterHealthState healthStateBefore,
         CharacterHealthState healthStateAfter,
-        float averageEffectiveness)
+        float health)
     {
         _bodyPartName = targetPart.Name;
         _effectivenessBefore = effectivenessBefore;
@@ -82,7 +89,7 @@ public class CombatDebugger
         _partStateAfter = BodyPartProfile.DetermineState(targetPart.Effectiveness);
         _healthStateBefore = healthStateBefore;
         _healthStateAfter = healthStateAfter;
-        _averageEffectiveness = averageEffectiveness;
+        _health = health;
     }
 
     public void Print()
@@ -98,34 +105,49 @@ public class CombatDebugger
         Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝");
         Console.WriteLine();
     }
+    
+    private void WriteLine(string text = "")
+    {
+        Console.WriteLine(text);
+
+        if (!LogToFile) return;
+        try
+        {
+            File.AppendAllText(_logFilePath, text + Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            // Fail silently or print once to console to avoid infinite loops/spam
+        }
+    }
 
     private void PrintAttackSection()
     {
-        Console.WriteLine($"║  ATTACK CALCULATION".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Weapon: {_weaponName} (base {_baseDamage})".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Strength: {_strength} / Required: {_minStrengthRequired} → Access: {_accessPercent:P1}".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Accessible Damage: {_accessibleDamage:F2} × Variance({_variance:F2}) = {_finalAttackValue:F2}".PadRight(67) + "║");
-        Console.WriteLine($"║  └─ vs Evasion: {_evasion} → Net Advantage: {_netAdvantage:+0.00;-0.00}".PadRight(67) + "║");
-        Console.WriteLine($"╠══════════════════════════════════════════════════════════════════╣");
+        WriteLine($"║  ATTACK CALCULATION".PadRight(67) + "║");
+        WriteLine($"║  ├─ Weapon: {_weaponName} (base {_baseDamage})".PadRight(67) + "║");
+        WriteLine($"║  ├─ Strength: {_strength} / Required: {_minStrengthRequired} → Access: {_accessPercent:P1}".PadRight(67) + "║");
+        WriteLine($"║  ├─ Accessible Damage: {_accessibleDamage:F2} × Variance({_variance:F2}) = {_finalAttackValue:F2}".PadRight(67) + "║");
+        WriteLine($"║  └─ vs Evasion: {_evasion} → Net Advantage: {_netAdvantage:+0.00;-0.00}".PadRight(67) + "║");
+        WriteLine($"╠══════════════════════════════════════════════════════════════════╣");
     }
 
     private void PrintHitResolutionSection()
     {
         var qualityBand = GetQualityBand(_strikeQuality);
-        Console.WriteLine($"║  HIT RESOLUTION".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Normalized: {_normalizedValue:F2} (range -20 to +20 → 0 to 1.5)".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Quality: {_strikeQuality.ToString().ToUpper()} ({qualityBand})".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Damage Roll: {_hitDamage} ({_normalizedValue:F2} × {GetDamageMultiplier(_strikeQuality)})".PadRight(67) + "║");
-        Console.WriteLine($"║  └─ Bleeding: {_bleedingRate} ({GetBleedingLabel(_bleedingRate)})".PadRight(67) + "║");
-        Console.WriteLine($"╠══════════════════════════════════════════════════════════════════╣");
+        WriteLine($"║  HIT RESOLUTION".PadRight(67) + "║");
+        WriteLine($"║  ├─ Normalized: {_normalizedValue:F2} (range -20 to +20 → 0 to 1.5)".PadRight(67) + "║");
+        WriteLine($"║  ├─ Quality: {_strikeQuality.ToString().ToUpper()} ({qualityBand})".PadRight(67) + "║");
+        WriteLine($"║  ├─ Damage Roll: {_hitDamage} ({_normalizedValue:F2} × {GetDamageMultiplier(_strikeQuality)})".PadRight(67) + "║");
+        WriteLine($"║  └─ Bleeding: {_bleedingRate} ({GetBleedingLabel(_bleedingRate)})".PadRight(67) + "║");
+        WriteLine($"╠══════════════════════════════════════════════════════════════════╣");
     }
 
     private void PrintBodyEffectSection()
     {
-        Console.WriteLine($"║  BODY EFFECT".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ {_bodyPartName}: {_effectivenessBefore} → {_effectivenessAfter} (−{_effectivenessBefore - _effectivenessAfter})".PadRight(67) + "║");
-        Console.WriteLine($"║  ├─ Part State: {_partStateBefore} → {_partStateAfter}".PadRight(67) + "║");
-        Console.WriteLine($"║  └─ Overall: {_healthStateBefore} → {_healthStateAfter} (avg: {_averageEffectiveness:F1}%)".PadRight(67) + "║");
+        WriteLine($"║  BODY EFFECT".PadRight(67) + "║");
+        WriteLine($"║  ├─ {_bodyPartName}: {_effectivenessBefore} → {_effectivenessAfter} (−{_effectivenessBefore - _effectivenessAfter})".PadRight(67) + "║");
+        WriteLine($"║  ├─ Part State: {_partStateBefore} → {_partStateAfter}".PadRight(67) + "║");
+        WriteLine($"║  └─ Overall: {_healthStateBefore} → {_healthStateAfter} (HP: {_health:F1})".PadRight(67) + "║");
     }
 
     private float CalculateAccess(float strength, float minReq)

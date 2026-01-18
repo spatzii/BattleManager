@@ -9,6 +9,7 @@ public class BattleMenu
     private readonly ICharacter _enemy;
     private bool _battleOver;
     private bool _debugFlag;
+    private bool _printToFile;
 
     public BattleMenu(ICharacter player, ICharacter enemy)
     {
@@ -41,9 +42,9 @@ public class BattleMenu
         Console.WriteLine("═══════════════════════════════════════");
     }
 
-    private void DisplayMenu()
+    private static void DisplayMenu()
     {
-        Console.WriteLine($"\n  [A]ttack  |  [D]efend  |  [P]otions  |  [F]lee | De[b]ug: {_debugFlag.ToString()}\n");
+        Console.WriteLine("\n  [A]ttack  |  [D]efend  |  [P]otions  |  [F]lee | [O]ptions;");
         Console.Write("  Your action: ");
     }
 
@@ -63,16 +64,46 @@ public class BattleMenu
             case 'p':
                 OpenPotionMenu();
                 break;
+            case 'o':
+                Options();
+                break;
             case 'f':
                 AttemptFlee();
-                break;
-            case 'b':
-                DebugFlipper();
-                StartBattle();
                 break;
             default:
                 Console.WriteLine("  Unknown command.");
                 break;
+        }
+    }
+
+    private void Options()
+    {
+        var inOptions = true;
+        while (inOptions)
+        {
+
+            Console.WriteLine(
+                $"\n [D]ebug: {_debugFlag.ToString()} | [P]rint to file: {_printToFile.ToString()} | [E]xit \n");
+            Console.Write("  Your action: ");
+
+            var input = Console.ReadKey(intercept: true).KeyChar;
+            Console.WriteLine(input);
+
+            switch (char.ToLower(input))
+            {
+                case 'd':
+                    DebugFlipper();
+                    break;
+                case 'p':
+                    PrintFlipper();
+                    break;
+                case 'e':
+                    inOptions = false;
+                    break;
+                default:
+                    Console.WriteLine("  Unknown command.");
+                    break;
+            }
         }
     }
 
@@ -130,7 +161,7 @@ public class BattleMenu
             : _enemy.Body.GetRandomPart();
 
         Console.WriteLine($"\n  You strike at the {_enemy.Name}'s {targetPart.Name}!");
-        _player.ResolveAttackAgainst(_enemy, targetPart, showDebug: _debugFlag);
+        _player.ResolveAttackAgainst(_enemy, targetPart, showDebug: _debugFlag, printDebug: _printToFile);
     }
 
     private void ExecuteDefend()
@@ -158,7 +189,7 @@ public class BattleMenu
             return;
             
         Console.WriteLine($"\n  The {_enemy.Name} retaliates!");
-        _enemy.ResolveAttackAgainst(_player, _player.Body.GetRandomPart(), showDebug: false);
+        _enemy.ResolveAttackAgainst(_player, _player.Body.GetRandomPart(), showDebug: _debugFlag, printDebug: _printToFile);
     }
 
     private void CheckBattleEnd()
@@ -178,5 +209,10 @@ public class BattleMenu
     private void DebugFlipper()
     {
         _debugFlag = !_debugFlag;
+    }
+
+    private void PrintFlipper()
+    {
+        _printToFile = !_printToFile;
     }
 }

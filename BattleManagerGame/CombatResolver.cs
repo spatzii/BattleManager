@@ -16,13 +16,15 @@ public static class CombatResolver
         this ICharacter attacker, 
         ICharacter defender, 
         IBodyPart targetPart, 
-        bool showDebug = false)
+        bool showDebug = false,
+        bool printDebug = false)
     
     {
         
         // Create debugger only if needed
-        var debugger = showDebug ? new CombatDebugger() : null;
-        
+        var debugger = (showDebug || printDebug) ? new CombatDebugger() : null;
+        debugger?.LogToFile = printDebug;
+
         // Capture "before" state
         var effectivenessBefore = targetPart.Effectiveness;
         var partStateBefore = BodyPartProfile.DetermineState(targetPart.Effectiveness);
@@ -43,14 +45,15 @@ public static class CombatResolver
         defender.GameState.UpdateHealthState(defender.Body);
     
         // Phase 5: Record body effect and print debug
-        var avgEffectiveness = (float)defender.Body.Parts.Values.Average(p => p.Effectiveness);
+        var health = defender.GameState.CurrentHealth;
+        
         debugger?.RecordBodyEffect(
             targetPart,
             effectivenessBefore,
             partStateBefore,
             healthStateBefore,
             defender.GameState.HealthState,
-            avgEffectiveness);
+            health);
     
         debugger?.Print();
     

@@ -74,6 +74,7 @@ internal class StubCharacterState : ICharacterState
 {
     public CharacterHealthState HealthState => CharacterHealthState.Healthy;
     public float CurrentStamina { get; set; } = 100f;
+    public float CurrentHealth { get; set; } = 100f;
 
     public void ConsumeStamina(float number) { }
     public void UpdateHealthState(IBody body) { }

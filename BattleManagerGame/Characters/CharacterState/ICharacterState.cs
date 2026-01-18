@@ -6,6 +6,7 @@ public interface ICharacterState
 {
     CharacterHealthState HealthState { get; }
     float CurrentStamina { get; set; }
+    float CurrentHealth { get; set; }
     void ConsumeStamina(float number);
     void UpdateHealthState(IBody body);
 }

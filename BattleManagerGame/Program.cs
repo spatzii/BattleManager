@@ -23,6 +23,8 @@ internal static class Program
 
         var battle = new BattleMenu(player, enemy);
         battle.StartBattle();
+        
+        // player.ResolveAttackAgainst(enemy, enemy.Body.GetRandomPart(), showDebug:true, printDebug:true);
 
     }
 }

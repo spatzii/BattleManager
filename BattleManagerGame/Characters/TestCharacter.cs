@@ -20,6 +20,6 @@ public class TestCharacter(string name, IBaseStats baseStats, IWeapons? weapon =
         List<int> effectivenessList = [];
         effectivenessList.AddRange(Body.Parts.Values.Select(part => part.Effectiveness));
         float totalEffectiveness = effectivenessList.Sum();
-        return totalEffectiveness / effectivenessList.Count;
+        return (totalEffectiveness / effectivenessList.Count);
     }
 }

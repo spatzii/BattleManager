@@ -9,6 +9,7 @@ public class CharacterState(IBaseStats baseStats) : ICharacterState
 {
     private readonly IBaseStats _baseStats = baseStats;
     public float CurrentStamina { get; set; } = baseStats.Stamina;
+    public float CurrentHealth { get; set; }
     public CharacterHealthState HealthState { get; private set; } = CharacterHealthState.Healthy;
 
     public void ConsumeStamina(float number)
@@ -17,11 +18,17 @@ public class CharacterState(IBaseStats baseStats) : ICharacterState
     }
     public void UpdateHealthState(IBody body)
     {
-        // Calculate average effectiveness across all body parts
+        // Step 1: Calculate average effectiveness across all body parts
         var avgEffectiveness = body.Parts.Values
             .Average(part => part.Effectiveness);
-        
-        HealthState = avgEffectiveness switch
+
+        // Step 2: Set CurrentHealth (couples to effectiveness)
+        CurrentHealth = (float)(avgEffectiveness / 100) * _baseStats.StartingHealth;
+
+        // Step 3: Derive HealthState from CurrentHealth percentage
+        var healthPercent = (CurrentHealth / _baseStats.StartingHealth) * 100;
+
+        HealthState = healthPercent switch
         {
             >= 90 => CharacterHealthState.Healthy,
             >= 70 => CharacterHealthState.Hurt,
