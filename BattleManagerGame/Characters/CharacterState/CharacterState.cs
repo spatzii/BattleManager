@@ -20,7 +20,7 @@ public class CharacterState(IBaseStats baseStats) : ICharacterState
     {
         // Step 1: Calculate average effectiveness across all body parts
         var avgEffectiveness = body.Parts.Values
-            .Average(part => part.Effectiveness);
+            .Average(part => part.Effectiveness); // todo: this should be tied to @GetOverallCondition in ICharacter
 
         // Step 2: Set CurrentHealth (couples to effectiveness)
         CurrentHealth = (float)(avgEffectiveness / 100) * _baseStats.StartingHealth;

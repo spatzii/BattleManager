@@ -1,10 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices.Swift;
-using TextBasedGame.Characters;
+﻿using TextBasedGame.Characters;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.DamageMechanics.BodyParts;
 
-namespace TextBasedGame;
+namespace TextBasedGame.Combat;
 
 public class Combat (ICharacter attacker, ICharacter defender)
 {

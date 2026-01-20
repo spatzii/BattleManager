@@ -1,9 +1,10 @@
 using System;
 using TextBasedGame.Characters;
+using TextBasedGame.Combat;
 
 namespace TextBasedGame;
 
-public class RoundManager(ICharacter hero, ICharacter enemy)
+public class ObsoleteRoundManager(ICharacter hero, ICharacter enemy)
 {
     private readonly ICharacter _hero = hero;
     private readonly ICharacter _enemy = enemy;

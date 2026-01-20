@@ -1,7 +1,6 @@
-using System;
 using TextBasedGame.Characters;
 
-namespace TextBasedGame;
+namespace TextBasedGame.Combat;
 
 public class DamageCalculator(ICharacter attacker, ICharacter defender)
 {

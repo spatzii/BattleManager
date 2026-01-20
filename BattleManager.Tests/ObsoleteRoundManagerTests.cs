@@ -8,7 +8,7 @@ using TextBasedGame.Equipment.Weapons;
 
 namespace BattleManager.Tests;
 
-public class RoundManagerTests
+public class ObsoleteRoundManagerTests
 {
     [Fact]
     public void ExecuteAttack_DefenderIsDead_AttackIsSkipped()
@@ -17,7 +17,7 @@ public class RoundManagerTests
         var aliveHero = new StubCharacter("Hero", overallCondition: 100f, initiative: 10f);
         var deadEnemy = new StubCharacter("Enemy", overallCondition: 0f, initiative: 5f);
 
-        var roundManager = new RoundManager(aliveHero, deadEnemy);
+        var roundManager = new ObsoleteRoundManager(aliveHero, deadEnemy);
 
         // Act & Assert
         // If the attack is properly skipped, GetRandomPart() won't be called on the dead defender's body.

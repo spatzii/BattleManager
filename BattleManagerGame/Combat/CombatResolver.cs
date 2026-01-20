@@ -1,9 +1,7 @@
-using System;
-using System.Linq;
 using TextBasedGame.Characters;
 using TextBasedGame.DamageMechanics.BodyParts;
 
-namespace TextBasedGame;
+namespace TextBasedGame.Combat;
 
 public static class CombatResolver
 {
