@@ -2,6 +2,7 @@ using TextBasedGame;
 using TextBasedGame.Characters;
 using TextBasedGame.Characters.BaseStats;
 using TextBasedGame.Characters.CharacterState;
+using TextBasedGame.DamageMechanics;
 using TextBasedGame.DamageMechanics.Body;
 using TextBasedGame.DamageMechanics.BodyParts;
 using TextBasedGame.Equipment.Weapons;

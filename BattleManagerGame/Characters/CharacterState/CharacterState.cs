@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using TextBasedGame.Characters.BaseStats;
+using TextBasedGame.DamageMechanics;
 using TextBasedGame.DamageMechanics.Body;
 
 namespace TextBasedGame.Characters.CharacterState;
@@ -18,17 +19,24 @@ public class CharacterState(IBaseStats baseStats) : ICharacterState
     }
     public void UpdateHealthState(IBody body)
     {
-        // Step 1: Calculate average effectiveness across all body parts
-        var avgEffectiveness = body.Parts.Values
-            .Average(part => part.Effectiveness); // todo: this should be tied to @GetOverallCondition in ICharacter
+        
+        // Step 1
 
-        // Step 2: Set CurrentHealth (couples to effectiveness)
-        CurrentHealth = (float)(avgEffectiveness / 100) * _baseStats.StartingHealth;
+        // foreach (var part in body.Parts)
+        // {
+        //     HealthPenaltyTable.GetPenalty(part.Value.Type, BodyPartProfile.DetermineState(part.Value.Effectiveness));
+        // }
+        var totalPenalty = body.Parts.Values.Sum(part => 
+            HealthPenaltyTable.GetPenalty(part.Type, BodyPartProfile.DetermineState(part.Effectiveness)));
 
-        // Step 3: Derive HealthState from CurrentHealth percentage
-        var healthPercent = (CurrentHealth / _baseStats.StartingHealth) * 100;
-
-        HealthState = healthPercent switch
+        // Step 2
+        var healthPercent = 100 - totalPenalty;
+        
+        // Step 3: Set CurrentHealth (couples to effectiveness)
+        CurrentHealth = (healthPercent/ 100) * _baseStats.StartingHealth;
+        
+        // Step 4: ???
+        HealthState = healthPercent switch // todo: does this belong here? Feels like it should be in Profiles.cs
         {
             >= 90 => CharacterHealthState.Healthy,
             >= 70 => CharacterHealthState.Hurt,

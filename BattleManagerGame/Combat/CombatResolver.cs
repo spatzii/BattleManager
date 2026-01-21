@@ -1,4 +1,5 @@
 using TextBasedGame.Characters;
+using TextBasedGame.DamageMechanics;
 using TextBasedGame.DamageMechanics.BodyParts;
 
 namespace TextBasedGame.Combat;

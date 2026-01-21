@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using TextBasedGame.Characters;
 using TextBasedGame.Combat;
+using TextBasedGame.DamageMechanics;
 using TextBasedGame.DamageMechanics.BodyParts;
 
 namespace TextBasedGame;

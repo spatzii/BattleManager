@@ -15,11 +15,15 @@ public class Body : IBody
     {
         return _parts[type]; // Or handle missing parts gracefully
     }
-    
     public IBodyPart GetRandomPart(Random? rng = null)
     {
         rng ??= Random.Shared;
         return _partList[rng.Next(_partList.Length)];
+    }
+
+    public static BodyPartHealthState State(IBodyPart part)
+    {
+        return BodyPartProfile.DetermineState(part.Effectiveness);
     }
     public Body()
     {

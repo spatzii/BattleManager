@@ -1,3 +1,4 @@
+using TextBasedGame.DamageMechanics;
 using TextBasedGame.DamageMechanics.Body;
 
 namespace TextBasedGame.Characters.CharacterState;

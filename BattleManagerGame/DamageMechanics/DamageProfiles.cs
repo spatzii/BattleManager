@@ -1,9 +1,6 @@
 // 1. The qualitative states
 
-using System;
-using TextBasedGame.DamageMechanics.BodyParts;
-
-namespace TextBasedGame;
+namespace TextBasedGame.DamageMechanics;
 
 public enum StrikeQuality
 {
